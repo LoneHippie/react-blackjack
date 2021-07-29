@@ -1,0 +1,102 @@
+@import '../styles/variables';
+@import '../styles/mq';
+@import '../styles/mixins';
+
+.playarea {
+    position: relative;
+    height: 33.33%;
+    width: 100%;
+}
+
+.deck {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    margin-right: 1.5rem;
+
+    @include playingCardSize();
+
+    background: $color-white;
+    border: 1px solid $color-black;
+
+    & > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        height: 90%;
+        width: 85%;
+
+        border: 2px solid $color-black;
+
+        z-index: 500;
+    }
+
+    & > span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        height: 50%;
+        width: 50%;
+
+        background: rgba($color-black, 0.9);
+
+        border-radius: 50%;
+        border: 2px solid $color-black;
+    }
+}
+
+.buttons {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    margin-left: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    @include playingCardSize();
+    width: 15rem;
+
+    & > button {
+        width: 100%;
+        padding: 0.5rem 0;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 600;
+
+        border-radius: 8px;
+    }
+}
+
+.message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 600;
+    color: red;
+
+    animation: slideIn 350ms;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50rem, -50%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}

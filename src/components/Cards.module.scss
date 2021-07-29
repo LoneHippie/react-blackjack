@@ -1,0 +1,97 @@
+@import '../styles/variables';
+@import '../styles/mq';
+@import '../styles/mixins';
+
+.hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+.card {
+    position: relative;
+    @include playingCardSize();
+
+    font-size: 2rem;
+    text-align: center;
+    background: $color-white;
+
+    border: 1px solid $color-black;
+
+    box-shadow: $shadow-light;
+
+    animation: dealAnimation 350ms;
+}
+
+.suit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    height: 50%;
+    width: 50%;
+}
+
+.valueTop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 2.5rem;
+    padding: 0.5rem;
+}
+
+.valueBottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 2.5rem;
+    padding: 0.5rem;
+}
+
+.hidden_border {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    height: 90%;
+    width: 85%;
+
+    border: 2px solid $color-black;
+
+    z-index: 500;
+}
+
+.hidden_center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    height: 50%;
+    width: 50%;
+
+    background: rgba($color-black, 0.9);
+
+    border-radius: 50%;
+    border: 2px solid $color-black;
+}
+
+@keyframes dealAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(-10rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

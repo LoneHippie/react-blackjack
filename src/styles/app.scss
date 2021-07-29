@@ -1,0 +1,30 @@
+@import 'variables';
+@import 'mq';
+
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+
+    @include respond(tablet) {
+        font-size: 70%;
+    }
+    @include respond(laptop) {
+        font-size: 75%;
+    }
+    @include respond(desktop) {
+        font-size: 78%;
+    }
+
+    scroll-behavior: smooth;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    box-sizing: border-box;
+}
