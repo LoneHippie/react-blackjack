@@ -29,16 +29,25 @@ const CenterBoard: React.FC<Props> = ({ hit, doubleDown, setStand, isPlayerAtSta
                 }}
             >
                 <button
+                    aria-label="Hit for another card"
                     onClick={() => hit('player', 1)}
-                >Hit</button>
+                >
+                    Hit
+                </button>
 
                 <button
+                    aria-label="Stand with current cards"
                     onClick={() => setStand('player')}
-                >Stand</button>
+                >
+                    Stand
+                </button>
 
                 <button
+                    aria-label="Double down"
                     onClick={() => doubleDown()}
-                >Double Down</button>
+                >
+                    Double Down
+                </button>
             </div>
 
             {

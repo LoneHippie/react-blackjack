@@ -13,8 +13,6 @@ const Gameboard: React.FC<{}> = () => {
     const [ totalMoney, setTotalMoney ] = useState<number>(200);
     const [ bet, setBet ] = useState<number>(50);
 
-    // const [ isFirstDeal, setIsFirstDeal ] = useState<boolean>(true);
-
     const [ dealerHand, setDealerHand ] = useState<any[]>([]);
     const [ dealerHandValue, setDealerHandValue ] = useState<number>(0);
     const [ isDealerAtStand, setIsDealerAtStand ] = useState<boolean>(false);
@@ -25,9 +23,9 @@ const Gameboard: React.FC<{}> = () => {
 
     const [ gameMessage, setGameMessage ] = useState<string>('');
 
-    const game = new Deck();
-    const player = new Hand();
-    const dealer = new Hand();
+    let game = new Deck();
+    let player = new Hand();
+    let dealer = new Hand();
 
     game.initialize();
 
@@ -39,6 +37,23 @@ const Gameboard: React.FC<{}> = () => {
         Draw = totalMoney
     };
 
+    enum Phase {
+        Betting,
+        Start,
+        PlayAgain
+    };
+
+    const [ gameState, setGameState ] = useState<Phase>(Phase.Start);
+
+    //initial deal
+    useEffect(() => {
+        if (gameState === Phase.Start) {
+            gameLogic.hit('player', 2);
+            gameLogic.hit('dealer', 2);
+        }
+    }, [gameState]);
+
+    //logic for game during start phase
     const gameLogic = {
         globals: {
             playerStand: 21,
@@ -177,14 +192,27 @@ const Gameboard: React.FC<{}> = () => {
             //reset betting
             setBet(0);
         },
+        resetGame: (): void => {
+            //all of this needs to ne contained within a component that gets de-rendered and re-rendered to re-init values
+            game = new Deck();
+            player = new Hand();
+            dealer = new Hand();
+
+            console.log(game);
+            console.log(player);
+
+            setPlayerHand([]);
+            setPlayerHandValue(0);
+            setIsPlayerAtStand(false);
+
+            setDealerHand([]);
+            setDealerHandValue(0);
+            setIsDealerAtStand(false);
+
+            setGameMessage('');
+        },
         wait: async (ms: number) => new Promise(res => setTimeout(res, ms))
     };
-
-    //initial deal
-    useEffect(() => {
-        gameLogic.hit('player', 2);
-        gameLogic.hit('dealer', 2);
-    }, []);
 
     //check on player hit for stand
     useEffect(() => {
@@ -214,13 +242,17 @@ const Gameboard: React.FC<{}> = () => {
                 isPlayerAtStand={isPlayerAtStand}
             />
 
-            <CenterBoard 
-                hit={gameLogic.hit}
-                doubleDown={gameLogic.doubleDown}
-                setStand={gameLogic.setStand}
-                isPlayerAtStand={isPlayerAtStand}
-                gameMessage={gameMessage}
-            />
+            {
+                gameState === Phase.Start ? (
+                    <CenterBoard 
+                        hit={gameLogic.hit}
+                        doubleDown={gameLogic.doubleDown}
+                        setStand={gameLogic.setStand}
+                        isPlayerAtStand={isPlayerAtStand}
+                        gameMessage={gameMessage}
+                    />
+                ) : null //betting or play again component will go here
+            }
 
             <PlayerSide 
                 playerHand={playerHand}
