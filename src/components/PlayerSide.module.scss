@@ -4,6 +4,7 @@
 .playarea {
     position: relative;
     height: 33.33%;
+    width: 100%;
 
     &::after {
         content: '';
@@ -32,7 +33,36 @@
     font-size: 4.5rem;
     color: $color-white;
 
-    // background: $board-color;
+    transform: translateY(-3.25rem);
+}
 
-    transform: translateY(-2.5rem);
+.money_info {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 0 0.7rem;
+
+    border-left: 2px solid $color-white;
+    border-top: 2px solid $color-white;
+    border-radius: 8px 0px 0px 0px;
+    background: rgba($color-black, 0.5);
+    color: $color-white;
+
+    z-index: 500;
+
+    & > div {
+        font-size: 2.2rem;
+        border-bottom: 1px solid $color-white;
+    }
+    & > span {
+        display: inline-block;
+        font-size: 2.2rem;
+        font-weight: 500;
+
+        margin-bottom: 0.5rem;
+    }
 }

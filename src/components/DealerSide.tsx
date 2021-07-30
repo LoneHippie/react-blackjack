@@ -19,7 +19,7 @@ const DealerSide: React.FC<Props> = ({ dealerHand, dealerHandValue, isDealerAtSt
             <div 
                 className={styles.points}
                 style={{
-                    color: isDealerAtStand ? 'red' : '#EEEEEE',
+                    color: isDealerAtStand ? '#000000' : '#EEEEEE',
                     transition: 'color 500ms'
                 }}
             >

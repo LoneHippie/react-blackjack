@@ -46,7 +46,7 @@ export class Deck implements DeckInterface {
             'Spades'
         ];
 
-        const values: Array<any> = [
+        const values: any[] = [
             {name: '2', value: 2},
             {name: '3', value: 3},
             {name: '4', value: 4},
@@ -64,10 +64,17 @@ export class Deck implements DeckInterface {
 
         this.initialize = function() {
             this.deck = [];
+
+            type Card = {
+                suit: string;
+                name: string;
+                card: string;
+                value: number;
+            }
             
             for (let suit in suits) {
                 for (let i = 0; i < values.length; i++) {
-                    const card: object = {
+                    const card: Card = {
                         suit:  suits[suit],
                         name: values[i].name,
                         card: `${values[i].name} of ${suits[suit]}`,

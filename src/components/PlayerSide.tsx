@@ -8,9 +8,11 @@ interface Props {
     playerHand: any[];
     playerHandValue: number;
     isPlayerAtStand: boolean;
+    totalMoney: number;
+    bet: number;
 }
 
-const PlayerSide: React.FC<Props> = ({ playerHand, playerHandValue, isPlayerAtStand }) => {
+const PlayerSide: React.FC<Props> = ({ playerHand, playerHandValue, isPlayerAtStand, totalMoney, bet }) => {
 
     return (
         <section className={styles.playarea}>
@@ -18,7 +20,7 @@ const PlayerSide: React.FC<Props> = ({ playerHand, playerHandValue, isPlayerAtSt
             <div 
                 className={styles.points}
                 style={{
-                    color: isPlayerAtStand ? 'red' : '#EEEEEE',
+                    color: isPlayerAtStand ? '#000000' : '#EEEEEE',
                     transition: 'color 500ms'
                 }}
             >
@@ -28,6 +30,13 @@ const PlayerSide: React.FC<Props> = ({ playerHand, playerHandValue, isPlayerAtSt
             <Cards 
                 cards={playerHand}
             />
+
+            <div className={styles.money_info}>
+                <div>Your Bet</div>
+                <span>{bet}</span>
+                <div>Your Total</div>
+                <span>{totalMoney}</span>
+            </div>
 
         </section>
     )

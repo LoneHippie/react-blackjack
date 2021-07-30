@@ -6,7 +6,6 @@ import '../styles/app.scss';
 
 const App: React.FC<{}> = () => {
 
-
     return (
         <div>
             <Gameboard />
