@@ -29,3 +29,19 @@ body {
     box-sizing: border-box;
     font-family: $font-ui;
 }
+
+main {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+    height: -webkit-fill-available;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    background: $board-color;
+}

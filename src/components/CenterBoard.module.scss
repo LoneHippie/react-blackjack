@@ -63,14 +63,17 @@
     justify-content: space-around;
 
     @include playingCardSize();
-    width: 15rem;
+    width: 17rem;
 
     & > button {
         width: 100%;
-        padding: 0.5rem 0;
+        padding: 0.2rem 0;
         text-align: center;
-        font-size: 2rem;
-        font-weight: 600;
+        font-family: $font-ui;
+        letter-spacing: 0.15rem;
+        text-transform: uppercase;
+        font-size: 2.2rem;
+        font-weight: 500;
 
         color: $color-white;
         box-shadow: $shadow-light;
@@ -79,30 +82,72 @@
         border: 2px solid $color-white;
 
         border-radius: 8px;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
 
-.message {
+.endgame {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 90%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.play_again_prompt {
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+    font-family: $font-ui;
+    font-size: 3.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: $color-white;
+    background: rgba($color-black, 0.8);
+    border: 2px solid $color-white;
+    border-radius: 8px;
+
+    animation: slideInRight 500ms;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.message {
     text-align: center;
     font-size: 4rem;
     font-weight: 600;
-    color: red;
+    text-transform: capitalize;
+    text-shadow: 1px 1px 2px $color-white;
+    color: $color-black;
 
-    animation: slideIn 350ms;
+    animation: slideInLeft 500ms;
 }
 
-@keyframes slideIn {
+@keyframes slideInLeft {
     0% {
         opacity: 0;
-        transform: translate(-50rem, -50%);
+        transform: translateX(-50rem);
     }
     100% {
         opacity: 1;
-        transform: translate(-50%, -50%);
+        transform: translate(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(50rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0);
     }
 }

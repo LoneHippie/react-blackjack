@@ -6,12 +6,18 @@ import PlayerSide from './PlayerSide';
 
 import { Deck, Hand } from '../application/Deck';
 
-import styles from './Gameboard.module.scss';
+// import styles from './Gameboard.module.scss';
 
-const Gameboard: React.FC<{}> = () => {
+interface Props {
+    switchToBettingPhase: () => void;
+    totalMoney: number;
+    setTotalMoney: (money: number) => any;
+    bet: number;
+    setBet: (money: number) => any;
+    doubleBet: () => void;
+}
 
-    const [ totalMoney, setTotalMoney ] = useState<number>(200);
-    const [ bet, setBet ] = useState<number>(50);
+const Gameboard: React.FC<Props> = ({ switchToBettingPhase, setTotalMoney, totalMoney, setBet, bet, doubleBet }) => {
 
     const [ dealerHand, setDealerHand ] = useState<any[]>([]);
     const [ dealerHandValue, setDealerHandValue ] = useState<number>(0);
@@ -37,21 +43,11 @@ const Gameboard: React.FC<{}> = () => {
         Draw = totalMoney
     };
 
-    enum Phase {
-        Betting,
-        Start,
-        PlayAgain
-    };
-
-    const [ gameState, setGameState ] = useState<Phase>(Phase.Start);
-
     //initial deal
     useEffect(() => {
-        if (gameState === Phase.Start) {
-            gameLogic.hit('player', 2);
-            gameLogic.hit('dealer', 2);
-        }
-    }, [gameState]);
+        gameLogic.hit('player', 2);
+        gameLogic.hit('dealer', 2);
+    }, []);
 
     //logic for game during start phase
     const gameLogic = {
@@ -129,10 +125,7 @@ const Gameboard: React.FC<{}> = () => {
             }
         },
         doubleDown: (): void => {
-            setBet(prevState => {
-                console.log(`New bet: ${prevState * 2}`);
-                return prevState * 2;
-            });
+            doubleBet();
             gameLogic.dealCard('player', 1);
             gameLogic.calcHandValue('player');
             gameLogic.setStand('player');
@@ -152,11 +145,11 @@ const Gameboard: React.FC<{}> = () => {
                 case dealerBust && playerBust:
                     if (dealerHandValue > playerHandValue) {
                         setTotalMoney(Results.Win);
-                        setGameMessage('Dealer bust, you win!');
+                        setGameMessage('Bust - you win');
                         break;
                     } else if (dealerHandValue < playerHandValue) {
                         setTotalMoney(Results.Lose);
-                        setGameMessage('Bust, you lose');
+                        setGameMessage('Bust - you lose');
                         break;
                     } else {
                         setTotalMoney(Results.Draw);
@@ -165,16 +158,16 @@ const Gameboard: React.FC<{}> = () => {
                     }
                 case dealerBust && !playerBust:
                     setTotalMoney(Results.Win);
-                    setGameMessage('Dealer bust, you win!');
+                    setGameMessage('Bust - you win');
                     break;
                 case !dealerBust && playerBust:
                     setTotalMoney(Results.Lose);
-                    setGameMessage('Bust, you lose');
+                    setGameMessage('Bust - you lose');
                     break;
                 case !dealerBust && !playerBust:
                     if (dealerHandValue < playerHandValue) {
                         setTotalMoney(Results.Win);
-                        setGameMessage('You win!');
+                        setGameMessage('You win');
                         break;
                     } else if (dealerHandValue > playerHandValue) {
                         setTotalMoney(Results.Lose);
@@ -191,25 +184,6 @@ const Gameboard: React.FC<{}> = () => {
             }
             //reset betting
             setBet(0);
-        },
-        resetGame: (): void => {
-            //all of this needs to ne contained within a component that gets de-rendered and re-rendered to re-init values
-            game = new Deck();
-            player = new Hand();
-            dealer = new Hand();
-
-            console.log(game);
-            console.log(player);
-
-            setPlayerHand([]);
-            setPlayerHandValue(0);
-            setIsPlayerAtStand(false);
-
-            setDealerHand([]);
-            setDealerHandValue(0);
-            setIsDealerAtStand(false);
-
-            setGameMessage('');
         },
         wait: async (ms: number) => new Promise(res => setTimeout(res, ms))
     };
@@ -233,7 +207,7 @@ const Gameboard: React.FC<{}> = () => {
     }, [dealerHandValue, isPlayerAtStand]);
 
     return (
-        <div className={styles.board}>
+        <>
 
             <DealerSide 
                 dealerHand={dealerHand}
@@ -242,17 +216,14 @@ const Gameboard: React.FC<{}> = () => {
                 isPlayerAtStand={isPlayerAtStand}
             />
 
-            {
-                gameState === Phase.Start ? (
-                    <CenterBoard 
-                        hit={gameLogic.hit}
-                        doubleDown={gameLogic.doubleDown}
-                        setStand={gameLogic.setStand}
-                        isPlayerAtStand={isPlayerAtStand}
-                        gameMessage={gameMessage}
-                    />
-                ) : null //betting or play again component will go here
-            }
+            <CenterBoard 
+                hit={gameLogic.hit}
+                doubleDown={gameLogic.doubleDown}
+                setStand={gameLogic.setStand}
+                isPlayerAtStand={isPlayerAtStand}
+                gameMessage={gameMessage}
+                switchToBettingPhase={switchToBettingPhase}
+            />  
 
             <PlayerSide 
                 playerHand={playerHand}
@@ -262,7 +233,7 @@ const Gameboard: React.FC<{}> = () => {
                 bet={bet}
             />
 
-        </div>
+        </>
     )
 };
 

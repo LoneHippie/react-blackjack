@@ -8,9 +8,10 @@ interface Props {
     setStand: (turn: any) => void;
     isPlayerAtStand: boolean;
     gameMessage: string;
+    switchToBettingPhase: () => void;
 }
 
-const CenterBoard: React.FC<Props> = ({ hit, doubleDown, setStand, isPlayerAtStand, gameMessage }) => {
+const CenterBoard: React.FC<Props> = ({ hit, doubleDown, setStand, isPlayerAtStand, gameMessage, switchToBettingPhase }) => {
 
     return (
         <section className={styles.playarea}>
@@ -52,8 +53,19 @@ const CenterBoard: React.FC<Props> = ({ hit, doubleDown, setStand, isPlayerAtSta
 
             {
                 gameMessage.length ? (
-                    <div className={styles.message}>
-                        {gameMessage}
+                    <div className={styles.endgame}>
+
+                        <div className={styles.message}>
+                            {gameMessage}
+                        </div>
+                        
+                        <button 
+                            className={styles.play_again_prompt}
+                            onClick={() => switchToBettingPhase()}
+                        >
+                            Play Again
+                        </button>
+
                     </div>
                 ) : null
             }
