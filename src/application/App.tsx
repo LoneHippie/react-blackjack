@@ -15,7 +15,7 @@ const App: React.FC<{}> = () => {
     const [ totalMoney, setTotalMoney ] = useState<number>(200);
     const [ bet, setBet ] = useState<number>(50);
 
-    const [ gameState, setGameState ] = useState<Phase>(Phase.Game);
+    const [ gameState, setGameState ] = useState<Phase>(Phase.Betting);
 
     const menuLogic = {
         toBettingPhase: (): void => {

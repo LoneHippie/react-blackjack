@@ -19,8 +19,7 @@ const Bettingboard: React.FC<Props> = ({ switchToGamePhase, bet, increaseBet, de
 
             <h1>React Blackjack</h1>
 
-            {/* <p>Get as close to 21 as possible without going over</p> */}
-            <p>Dealer stands at 17</p>
+            <p>-Dealer stands at 17-</p>
 
             <div className={styles.money}>
 
@@ -46,7 +45,11 @@ const Bettingboard: React.FC<Props> = ({ switchToGamePhase, bet, increaseBet, de
                         >
                             <img 
                                 src={Arrow}
-                                style={{transform: 'rotate(180deg)'}}
+                                style={{
+                                    transform: 'rotate(180deg)',
+                                    opacity: bet === totalMoney ? '0.5' : '1',
+                                    cursor: bet === totalMoney ? 'default' : 'pointer'
+                                }}
                                 aria-label="Increase bet"
                                 alt="increase bet"
                             />
@@ -57,7 +60,11 @@ const Bettingboard: React.FC<Props> = ({ switchToGamePhase, bet, increaseBet, de
                         >
                             <img 
                                 src={Arrow}
-                                style={{transform: 'rotate(0deg)'}}
+                                style={{
+                                    transform: 'rotate(0deg)',
+                                    opacity: bet <= 0 ? '0.5' : '1',
+                                    cursor: bet <= 0 ? 'default' : 'pointer'
+                                }}
                                 aria-label="Decrease bet"
                                 alt="decrease bet"
                             />
@@ -70,6 +77,10 @@ const Bettingboard: React.FC<Props> = ({ switchToGamePhase, bet, increaseBet, de
 
             <button 
                 className={styles.start_button}
+                style={{
+                    opacity: bet <= 0 ? '0.5' : '1',
+                    cursor: bet <= 0 ? 'default' : 'pointer'
+                }}
                 onClick={() => switchToGamePhase()}
             >
                 Play
